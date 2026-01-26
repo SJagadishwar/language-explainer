@@ -15,31 +15,34 @@
   let currentLanguage = "english";
   const cache = {};
 
-  function createButton(text, className) {
+  function createButton(text) {
     const btn = document.createElement("button");
     btn.textContent = text;
-    btn.className = className;
+    btn.className = "lang-btn";
     return btn;
   }
 
-  const hinglishBtn = createButton("Understand in Hinglish", "lang-btn primary");
-  const telgishBtn = createButton("Understand in Telgish", "lang-btn");
-  const englishBtn = createButton("Read in English", "lang-btn");
+  const hinglishBtn = createButton("Understand in Hinglish");
+  const telgishBtn = createButton("Understand in Telgish");
+  const englishBtn = createButton("Read in English");
 
+  // Default active
+  hinglishBtn.classList.add("primary");
   englishBtn.style.display = "none";
 
   buttonContainer.appendChild(hinglishBtn);
   buttonContainer.appendChild(telgishBtn);
   buttonContainer.appendChild(englishBtn);
 
-  function setActive(language) {
+  function resetButtons() {
     hinglishBtn.classList.remove("primary");
     telgishBtn.classList.remove("primary");
     englishBtn.classList.remove("primary");
+  }
 
-    if (language === "hinglish") hinglishBtn.classList.add("primary");
-    if (language === "telgish") telgishBtn.classList.add("primary");
-    if (language === "english") englishBtn.classList.add("primary");
+  function setActive(btn) {
+    resetButtons();
+    btn.classList.add("primary");
   }
 
   async function convert(language) {
@@ -48,10 +51,7 @@
     const res = await fetch("/convert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: sourceText,
-        language,
-      }),
+      body: JSON.stringify({ text: sourceText, language }),
     });
 
     const data = await res.json();
@@ -59,14 +59,13 @@
     return data.result;
   }
 
-  async function handleClick(language) {
+  async function handleLanguage(language, btn) {
     if (loading || currentLanguage === language) return;
 
     loading = true;
     status.textContent = "Explaining in simple language…";
     article.innerHTML = "";
-
-    setActive(language);
+    setActive(btn);
 
     try {
       const result = await convert(language);
@@ -74,23 +73,23 @@
         "<p>" + result.replace(/\n\n/g, "</p><p>") + "</p>";
       currentLanguage = language;
       englishBtn.style.display = "inline-block";
-    } catch (e) {
+    } catch {
       article.innerHTML = originalHTML;
       status.textContent = "";
-      setActive("hinglish");
+      setActive(hinglishBtn);
     } finally {
       loading = false;
     }
   }
 
-  hinglishBtn.onclick = () => handleClick("hinglish");
-  telgishBtn.onclick = () => handleClick("telgish");
+  hinglishBtn.onclick = () => handleLanguage("hinglish", hinglishBtn);
+  telgishBtn.onclick = () => handleLanguage("telgish", telgishBtn);
 
   englishBtn.onclick = () => {
     article.innerHTML = originalHTML;
     status.textContent = "";
     currentLanguage = "english";
     englishBtn.style.display = "none";
-    setActive("hinglish");
+    setActive(hinglishBtn);
   };
 })();

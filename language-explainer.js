@@ -39,7 +39,6 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        articleUrl: "/index.html",
         text: sourceText,
         language,
       }),

@@ -32,6 +32,16 @@
   buttonContainer.appendChild(telgishBtn);
   buttonContainer.appendChild(englishBtn);
 
+  function setActive(language) {
+    hinglishBtn.classList.remove("primary");
+    telgishBtn.classList.remove("primary");
+    englishBtn.classList.remove("primary");
+
+    if (language === "hinglish") hinglishBtn.classList.add("primary");
+    if (language === "telgish") telgishBtn.classList.add("primary");
+    if (language === "english") englishBtn.classList.add("primary");
+  }
+
   async function convert(language) {
     if (cache[language]) return cache[language];
 
@@ -56,6 +66,8 @@
     status.textContent = "Explaining in simple language…";
     article.innerHTML = "";
 
+    setActive(language);
+
     try {
       const result = await convert(language);
       article.innerHTML =
@@ -65,6 +77,7 @@
     } catch (e) {
       article.innerHTML = originalHTML;
       status.textContent = "";
+      setActive("hinglish");
     } finally {
       loading = false;
     }
@@ -78,5 +91,6 @@
     status.textContent = "";
     currentLanguage = "english";
     englishBtn.style.display = "none";
+    setActive("hinglish");
   };
 })();

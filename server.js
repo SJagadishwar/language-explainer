@@ -67,6 +67,8 @@ Your job is to help a normal reader understand the article quickly and clearly, 
 Explain the article in very SIMPLE, NATURAL TELGISH tone like whatsapp Telgish language, only use daily telgish words used by telugu people in states like Telangana and AndhraPradesh.
 
 Rules (follow strictly):
+- Start directly with the explanation
+- Do NOT add any introduction, acknowledgement, or opener
 - Use very simple Telgish, like how educated Indians speak casually
 - Keep important terms in English (interest rates, inflation, economy, loan, EMI, etc.)
 - Avoid heavy Telugu words
@@ -77,6 +79,8 @@ Rules (follow strictly):
 - Do not translate sentence-by-sentence
 - Prefer clarity over completeness (KISS principle)
 - Do not add headings just explain the article
+
+explain in few lines, dont explain in large paragraphs keep it concise based on article length.
 
 `;
 

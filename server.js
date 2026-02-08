@@ -52,10 +52,6 @@ Rules (follow strictly):
 - Do not translate sentence-by-sentence
 - Prefer clarity over completeness (KISS principle)
 
-First:
-Explain the core idea in 2–4 clear sentences.
-Focus on what is happening and why it matters.
-
 `;
 
   } else if (language === "telgish") {
@@ -76,10 +72,6 @@ Rules (follow strictly):
 - Do not translate sentence-by-sentence
 - Prefer clarity over completeness (KISS principle)
 - Do not add headings just explain the article
-
-First:
-Explain the core idea in clear sentences.
-Focus on what is happening and why it matters.
 
 `;
 

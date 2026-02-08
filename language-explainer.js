@@ -37,7 +37,8 @@ function trackEvent(event, language = null) {
   const buttonContainer = document.getElementById("languageButtonContainer");
   const status = document.getElementById("languageStatus");
 
-  if (!article || !buttonContainer || !status) return;
+  if (!article || !buttonContainer) return;
+
 
   const originalHTML = article.innerHTML;
   const sourceText = article.innerText;
@@ -100,7 +101,8 @@ function trackEvent(event, language = null) {
     if (loading || currentLanguage === language) return;
 
     loading = true;
-    status.textContent = "Explaining in simple language…";
+    if (status) status.textContent = "Explaining in simple language…";
+
     article.innerHTML = "";
     setActive(btn);
 
@@ -111,7 +113,8 @@ function trackEvent(event, language = null) {
         "<p>" + result.replace(/\n\n/g, "</p><p>") + "</p>";
 
       // ✅ ADD THIS LINE (THIS FIXES EVERYTHING)
-      status.textContent = "";
+      if (status) status.textContent = "";
+
 
       currentLanguage = language;
       englishBtn.style.display = "inline-block";

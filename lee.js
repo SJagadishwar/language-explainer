@@ -128,8 +128,11 @@ const API_BASE = "https://language-explainer.onrender.com";
         "<p>" + result.replace(/\n\n/g, "</p><p>") + "</p>";
 
       // ✅ FIX: hide loading text AFTER explanation is shown
-      status.textContent = "";
-      status.style.display = "none";
+      status.textContent = "Explained simply";
+      setTimeout(() => {
+        status.style.display = "none";
+      }, 1200);
+
 
       englishBtn.style.display = "inline-block";
       currentLanguage = language;

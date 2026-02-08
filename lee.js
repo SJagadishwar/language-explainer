@@ -118,22 +118,30 @@ const API_BASE = "https://language-explainer.onrender.com";
 
     loading = true;
     status.textContent = "Explaining in simple language…";
+    status.style.display = "block";
     articleEl.innerHTML = "";
 
     try {
       const result = await convert(language);
+
       articleEl.innerHTML =
         "<p>" + result.replace(/\n\n/g, "</p><p>") + "</p>";
+
+      // ✅ FIX: hide loading text AFTER explanation is shown
+      status.textContent = "";
+      status.style.display = "none";
 
       englishBtn.style.display = "inline-block";
       currentLanguage = language;
     } catch {
       articleEl.innerHTML = originalHTML;
       status.textContent = "";
+      status.style.display = "none";
     } finally {
       loading = false;
     }
   }
+
 
   hinglishBtn.onclick = () => {
     trackEvent("explainer_clicked", "hinglish");

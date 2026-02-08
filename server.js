@@ -315,6 +315,10 @@ app.get("/analytics/summary", (req, res) => {
   }
 });
 
+// ---------- HEALTH CHECK (keep service awake) ----------
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 
 
 

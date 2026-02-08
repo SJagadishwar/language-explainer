@@ -218,19 +218,30 @@ app.post("/analytics/event", (req, res) => {
 });
 
 // ---------- ANALYTICS SUMMARY (READ-ONLY) ----------
+// ---------- ANALYTICS SUMMARY (FIXED METRICS) ----------
 app.get("/analytics/summary", (req, res) => {
   try {
     const ANALYTICS_FILE = path.join(__dirname, "analytics.json");
 
     if (!fs.existsSync(ANALYTICS_FILE)) {
-      return res.json({ totalEvents: 0 });
+      return res.json({
+        totalSessions: 0,
+        adoptionRate: 0,
+        engagementIntensity: 0,
+        languages: { hinglish: 0, telgish: 0 },
+        avgTimeBefore: 0,
+        avgTimeAfter: 0,
+        avgExtraTime: 0,
+        returnedToOriginal: 0
+      });
     }
 
     const events = JSON.parse(fs.readFileSync(ANALYTICS_FILE, "utf8"));
 
-    const sessions = new Set();
-    let explainerVisible = 0;
-    let explainerClicks = 0;
+    const visibleSessions = new Set();
+    const clickedSessions = new Set();
+
+    let totalClicks = 0;
     let hinglish = 0;
     let telgish = 0;
     let returned = 0;
@@ -239,33 +250,48 @@ app.get("/analytics/summary", (req, res) => {
     let afterTimes = [];
 
     events.forEach(e => {
-      sessions.add(e.sessionId);
-
-      if (e.event === "explainer_visible") explainerVisible++;
-      if (e.event === "explainer_clicked") {
-        explainerClicks++;
-        if (e.language === "hinglish") hinglish++;
-        if (e.language === "telgish") telgish++;
-        if (typeof e.timeOnPage === "number") afterTimes.push(e.timeOnPage);
+      if (e.event === "explainer_visible") {
+        visibleSessions.add(e.sessionId);
+        if (typeof e.timeOnPage === "number") {
+          beforeTimes.push(e.timeOnPage);
+        }
       }
 
-      if (e.event === "returned_to_original") returned++;
-      if (e.event === "explainer_visible" && typeof e.timeOnPage === "number") {
-        beforeTimes.push(e.timeOnPage);
+      if (e.event === "explainer_clicked") {
+        clickedSessions.add(e.sessionId);
+        totalClicks++;
+
+        if (e.language === "hinglish") hinglish++;
+        if (e.language === "telgish") telgish++;
+
+        if (typeof e.timeOnPage === "number") {
+          afterTimes.push(e.timeOnPage);
+        }
+      }
+
+      if (e.event === "returned_to_original") {
+        returned++;
       }
     });
 
     const avg = arr =>
       arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0;
 
+    const totalSessions = visibleSessions.size;
+    const adoptionRate =
+      totalSessions === 0
+        ? 0
+        : Math.round((clickedSessions.size / totalSessions) * 100);
+
+    const engagementIntensity =
+      clickedSessions.size === 0
+        ? 0
+        : Math.round((totalClicks / clickedSessions.size) * 10) / 10;
+
     res.json({
-      totalSessions: sessions.size,
-      explainerVisible,
-      explainerClicks,
-      usageRate:
-        explainerVisible === 0
-          ? 0
-          : Math.round((explainerClicks / explainerVisible) * 100),
+      totalSessions,
+      adoptionRate,               // ✅ publisher metric (≤ 100%)
+      engagementIntensity,        // ✅ depth metric
       languages: {
         hinglish,
         telgish
@@ -276,9 +302,11 @@ app.get("/analytics/summary", (req, res) => {
       returnedToOriginal: returned
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Summary failed" });
   }
 });
+
 
 
 

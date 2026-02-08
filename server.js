@@ -52,6 +52,8 @@ Rules (follow strictly):
 - Do not translate sentence-by-sentence
 - Prefer clarity over completeness (KISS principle)
 
+explain in few lines, dont explain in large paragraphs keep it concise based on article length.
+
 `;
 
   } else if (language === "telgish") {

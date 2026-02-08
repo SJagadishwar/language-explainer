@@ -106,10 +106,16 @@ function trackEvent(event, language = null) {
 
     try {
       const result = await convert(language);
+
       article.innerHTML =
         "<p>" + result.replace(/\n\n/g, "</p><p>") + "</p>";
+
+      // ✅ ADD THIS LINE (THIS FIXES EVERYTHING)
+      status.textContent = "";
+
       currentLanguage = language;
       englishBtn.style.display = "inline-block";
+
     } catch {
       article.innerHTML = originalHTML;
       status.textContent = "";

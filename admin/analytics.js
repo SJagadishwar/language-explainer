@@ -1,7 +1,14 @@
-fetch("/analytics/summary")
-  .then(res => res.json())
+fetch(window.location.origin + "/analytics/summary")
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("Analytics API error: " + res.status);
+    }
+    return res.json();
+  })
   .then(data => {
-    document.getElementById("sessions").innerText = data.totalSessions;
+    document.getElementById("sessions").innerText =
+      data.totalSessions ?? "–";
+
     const adoption =
       typeof data.adoptionRate === "number"
         ? data.adoptionRate
@@ -10,23 +17,35 @@ fetch("/analytics/summary")
         : 0;
 
     document.getElementById("usage").innerText = adoption + "%";
+    document.getElementById("returned").innerText =
+      data.returnedToOriginal ?? "–";
 
-    document.getElementById("returned").innerText = data.returnedToOriginal;
+    document.getElementById("hinglish").innerText =
+      data.languages?.hinglish ?? 0;
 
-    document.getElementById("hinglish").innerText = data.languages.hinglish;
-    document.getElementById("telgish").innerText = data.languages.telgish;
+    document.getElementById("telgish").innerText =
+      data.languages?.telgish ?? 0;
+
     document.getElementById("intensity").innerText =
       typeof data.engagementIntensity === "number"
         ? data.engagementIntensity
         : 0;
 
+    document.getElementById("before").innerText =
+      typeof data.avgTimeBefore === "number"
+        ? data.avgTimeBefore + " sec"
+        : "– sec";
 
+    document.getElementById("after").innerText =
+      typeof data.avgTimeAfter === "number"
+        ? data.avgTimeAfter + " sec"
+        : "– sec";
 
-    document.getElementById("before").innerText = data.avgTimeBefore;
-    document.getElementById("after").innerText = data.avgTimeAfter;
-    document.getElementById("extra").innerText = data.avgExtraTime;
+    document.getElementById("extra").innerText =
+      typeof data.avgExtraTime === "number"
+        ? data.avgExtraTime + " sec"
+        : "– sec";
   })
   .catch(err => {
-    console.warn("Analytics not ready yet", err);
+    console.warn("Analytics fetch failed safely:", err.message);
   });
-

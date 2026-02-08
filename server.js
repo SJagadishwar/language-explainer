@@ -236,7 +236,15 @@ app.get("/analytics/summary", (req, res) => {
       });
     }
 
-    const events = JSON.parse(fs.readFileSync(ANALYTICS_FILE, "utf8"));
+    let events = [];
+
+    try {
+      const raw = fs.readFileSync(ANALYTICS_FILE, "utf8");
+      events = raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      events = [];
+    }
+
 
     const visibleSessions = new Set();
     const clickedSessions = new Set();

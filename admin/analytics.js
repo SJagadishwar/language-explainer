@@ -26,6 +26,7 @@ fetch("/analytics/summary")
     document.getElementById("after").innerText = data.avgTimeAfter;
     document.getElementById("extra").innerText = data.avgExtraTime;
   })
-  .catch(() => {
-    alert("Failed to load analytics");
+  .catch(err => {
+    console.warn("Analytics not ready yet", err);
   });
+

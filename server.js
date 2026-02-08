@@ -56,10 +56,6 @@ First:
 Explain the core idea in 2–4 clear sentences.
 Focus on what is happening and why it matters.
 
-Then:
-ONLY if an analogy adds clarity, add real world analogy explanation in simple, natural Hinglish slang.
-If not, skip the analogy.
-
 `;
 
   } else if (language === "telgish") {
@@ -85,10 +81,7 @@ First:
 Explain the core idea in clear sentences.
 Focus on what is happening and why it matters.
 
-Then:
-ONLY if an analogy adds clarity, 
-add real world analogy explanation in simple, natural telgish slang like whatsapp Telgish language, only use daily telgish words used by telugu people in states like Telangana and AndhraPradesh.
-If not, skip the analogy.`;
+`;
 
   } else {
     throw new Error("Unsupported language");

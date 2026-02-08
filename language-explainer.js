@@ -1,4 +1,35 @@
 (function () {
+
+  // ---------- ANALYTICS ----------
+const ARTICLE_ID = document.body.dataset.articleId || "unknown";
+
+const SESSION_ID =
+  sessionStorage.getItem("lee_session") ||
+  (() => {
+    const id = "sess_" + Math.random().toString(36).slice(2);
+    sessionStorage.setItem("lee_session", id);
+    return id;
+  })();
+
+const pageLoadTime = Date.now();
+
+function trackEvent(event, language = null) {
+  const timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000);
+
+  fetch("/analytics/event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      articleId: ARTICLE_ID,
+      event,
+      language,
+      sessionId: SESSION_ID,
+      timeOnPage
+    })
+  }).catch(() => {});
+}
+
+
   if (window.__LANG_EXPLAINER_LOADED__) return;
   window.__LANG_EXPLAINER_LOADED__ = true;
 
@@ -33,6 +64,8 @@
   buttonContainer.appendChild(hinglishBtn);
   buttonContainer.appendChild(telgishBtn);
   buttonContainer.appendChild(englishBtn);
+  trackEvent("explainer_visible");
+
 
   function resetButtons() {
     hinglishBtn.classList.remove("primary");
@@ -51,7 +84,11 @@
     const res = await fetch("/convert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: sourceText, language }),
+      body: JSON.stringify({
+        text: sourceText,
+        language,
+        articleUrl: window.location.pathname
+      }),
     });
 
     const data = await res.json();
@@ -82,14 +119,25 @@
     }
   }
 
-  hinglishBtn.onclick = () => handleLanguage("hinglish", hinglishBtn);
-  telgishBtn.onclick = () => handleLanguage("telgish", telgishBtn);
+  hinglishBtn.onclick = () => {
+    trackEvent("explainer_clicked", "hinglish");
+    handleLanguage("hinglish", hinglishBtn);
+  };
+
+  telgishBtn.onclick = () => {
+    trackEvent("explainer_clicked", "telgish");
+    handleLanguage("telgish", telgishBtn);
+  };
+
 
   englishBtn.onclick = () => {
-    article.innerHTML = originalHTML;
+  trackEvent("returned_to_original");
+
+  article.innerHTML = originalHTML;
     status.textContent = "";
     currentLanguage = "english";
     englishBtn.style.display = "none";
     setActive(hinglishBtn);
   };
+
 })();

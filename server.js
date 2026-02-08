@@ -9,6 +9,7 @@ const PORT = 3000;
 // ⚠️ Move API key to env later (OK for now)
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -156,6 +157,130 @@ app.post("/convert", async (req, res) => {
     res.status(500).json({ error: "Conversion failed" });
   }
 });
+
+// ---------- ARTICLES ----------
+const ARTICLES_FILE = path.join(__dirname, "articles.json");
+
+function readArticles() {
+  return JSON.parse(fs.readFileSync(ARTICLES_FILE, "utf8"));
+}
+
+app.get("/article/:id", (req, res) => {
+  const articles = readArticles();
+  const article = articles[req.params.id];
+
+  if (!article) {
+    return res.status(404).json({ error: "Article not found" });
+  }
+
+  res.json(article);
+});
+
+
+// ---------- ANALYTICS ----------
+const ANALYTICS_FILE = path.join(__dirname, "analytics.json");
+
+function readAnalytics() {
+  if (!fs.existsSync(ANALYTICS_FILE)) {
+    fs.writeFileSync(ANALYTICS_FILE, "[]");
+  }
+  return JSON.parse(fs.readFileSync(ANALYTICS_FILE, "utf8"));
+}
+
+function writeAnalytics(events) {
+  fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(events, null, 2));
+}
+
+app.post("/analytics/event", (req, res) => {
+  try {
+    const { articleId, event, language, sessionId, timeOnPage } = req.body;
+
+    if (!articleId || !event || !sessionId) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const analytics = readAnalytics();
+
+    analytics.push({
+      articleId,
+      event,
+      language: language || null,
+      sessionId,
+      timeOnPage: timeOnPage || null,
+      timestamp: new Date().toISOString()
+    });
+
+    writeAnalytics(analytics);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "Analytics failed" });
+  }
+});
+
+// ---------- ANALYTICS SUMMARY (READ-ONLY) ----------
+app.get("/analytics/summary", (req, res) => {
+  try {
+    const ANALYTICS_FILE = path.join(__dirname, "analytics.json");
+
+    if (!fs.existsSync(ANALYTICS_FILE)) {
+      return res.json({ totalEvents: 0 });
+    }
+
+    const events = JSON.parse(fs.readFileSync(ANALYTICS_FILE, "utf8"));
+
+    const sessions = new Set();
+    let explainerVisible = 0;
+    let explainerClicks = 0;
+    let hinglish = 0;
+    let telgish = 0;
+    let returned = 0;
+
+    let beforeTimes = [];
+    let afterTimes = [];
+
+    events.forEach(e => {
+      sessions.add(e.sessionId);
+
+      if (e.event === "explainer_visible") explainerVisible++;
+      if (e.event === "explainer_clicked") {
+        explainerClicks++;
+        if (e.language === "hinglish") hinglish++;
+        if (e.language === "telgish") telgish++;
+        if (typeof e.timeOnPage === "number") afterTimes.push(e.timeOnPage);
+      }
+
+      if (e.event === "returned_to_original") returned++;
+      if (e.event === "explainer_visible" && typeof e.timeOnPage === "number") {
+        beforeTimes.push(e.timeOnPage);
+      }
+    });
+
+    const avg = arr =>
+      arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0;
+
+    res.json({
+      totalSessions: sessions.size,
+      explainerVisible,
+      explainerClicks,
+      usageRate:
+        explainerVisible === 0
+          ? 0
+          : Math.round((explainerClicks / explainerVisible) * 100),
+      languages: {
+        hinglish,
+        telgish
+      },
+      avgTimeBefore: avg(beforeTimes),
+      avgTimeAfter: avg(afterTimes),
+      avgExtraTime: avg(afterTimes) - avg(beforeTimes),
+      returnedToOriginal: returned
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Summary failed" });
+  }
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);

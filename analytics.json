@@ -1,0 +1,210 @@
+[
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_yp04fxd904",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:31:27.698Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_yp04fxd904",
+    "timeOnPage": 6,
+    "timestamp": "2026-02-01T03:31:34.124Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_yp04fxd904",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:33:20.941Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_yp04fxd904",
+    "timeOnPage": 2,
+    "timestamp": "2026-02-01T03:33:23.673Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:36:56.130Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 6,
+    "timestamp": "2026-02-01T03:37:02.259Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "returned_to_original",
+    "language": null,
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 34,
+    "timestamp": "2026-02-01T03:37:30.914Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 36,
+    "timestamp": "2026-02-01T03:37:33.038Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "telgish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 44,
+    "timestamp": "2026-02-01T03:37:40.733Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 63,
+    "timestamp": "2026-02-01T03:37:59.540Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "telgish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 75,
+    "timestamp": "2026-02-01T03:38:11.871Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:40:28.088Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 1,
+    "timestamp": "2026-02-01T03:40:29.749Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "telgish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 17,
+    "timestamp": "2026-02-01T03:40:46.005Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 36,
+    "timestamp": "2026-02-01T03:41:04.197Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "telgish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 39,
+    "timestamp": "2026-02-01T03:41:08.064Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 41,
+    "timestamp": "2026-02-01T03:41:09.329Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "returned_to_original",
+    "language": null,
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 42,
+    "timestamp": "2026-02-01T03:41:10.282Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 43,
+    "timestamp": "2026-02-01T03:41:11.544Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:41:14.270Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 2,
+    "timestamp": "2026-02-01T03:41:16.738Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "telgish",
+    "sessionId": "sess_v95bod9xh4i",
+    "timeOnPage": 5,
+    "timestamp": "2026-02-01T03:41:20.255Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_uuj6xx1zmqh",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:50:42.584Z"
+  },
+  {
+    "articleId": "art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_uuj6xx1zmqh",
+    "timeOnPage": 35,
+    "timestamp": "2026-02-01T03:51:17.625Z"
+  },
+  {
+    "articleId": "client_art_001",
+    "event": "explainer_visible",
+    "language": null,
+    "sessionId": "sess_w2cgw47bb7o",
+    "timeOnPage": null,
+    "timestamp": "2026-02-01T03:59:42.506Z"
+  },
+  {
+    "articleId": "client_art_001",
+    "event": "explainer_clicked",
+    "language": "hinglish",
+    "sessionId": "sess_w2cgw47bb7o",
+    "timeOnPage": 6,
+    "timestamp": "2026-02-01T03:59:48.879Z"
+  }
+]
